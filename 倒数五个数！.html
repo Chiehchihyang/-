@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        window.onload = function () {
+            autoPlay();
+            setInterval(autoPlay, 1000);
+
+            function autoPlay() {
+                var date = new Date();
+                var newDate = new Date(2018,9,1,23,59,59);
+                console.log(newDate - date);
+                var time = Math.floor((newDate - date) / 1000);
+                var d = Math.floor(time / 86400);
+                var h = Math.floor(time % 86400 / 3600);
+                var m = Math.floor(time % 3600 / 60);
+                var s = Math.floor(time % 60);
+                document.body.innerHTML = zero(d) + "天" + zero(h) + "小时" + zero(m) + "分" + zero(s) + "秒"
+            }
+            function zero(j) {
+                return j < 10 ? "0" + j : "" + j
+            }
+        }
+    </script>
+</head>
+<body>
+<div></div>
+<?php
+echo "大尾巴狼";
+?>
+</body>
+</html>

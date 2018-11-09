@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DW 手表</title>
+</head>
+<body>
+
+
+<canvas id="mycanvas" width="500" height="500"></canvas>
+<script>
+
+    var cas = document.getElementById('mycanvas').getContext('2d');
+    drawClock();
+    //一秒一跳
+    setInterval(function () {
+        drawClock()
+    }, 1000);
+//画表
+    function drawClock() {
+        //清屏
+        cas.clearRect(0, 0, 500, 500);
+//表盘
+        cas.beginPath();
+        cas.arc(250, 250, 200, 0, Math.PI * 2);
+        cas.closePath();
+        cas.lineWidth = 8;
+        cas.strokeStyle = "black";
+        cas.stroke();
+//时针刻度
+        for (var i = 0; i < 12; i++) {
+            cas.save();
+            cas.translate(250, 250);
+            cas.rotate(i * Math.PI / 6);
+            cas.beginPath();
+            cas.moveTo(0, -200);
+            cas.lineTo(0, -175);
+            cas.lineWidth = 5;
+            cas.stroke();
+            cas.restore()
+        }
+//分针刻度
+        for (var i = 0; i < 60; i++) {
+            cas.save();
+            cas.translate(250, 250);
+            cas.rotate(i * Math.PI / 30);
+            cas.beginPath();
+            cas.moveTo(0, -200);
+            cas.lineTo(0, -185);
+            cas.lineWidth = 3;
+            cas.stroke();
+            cas.restore()
+        }
+//get世界时间
+        var now = new Date(),
+            hour24 = now.getHours(),
+            minute = now.getMinutes(),
+            second = now.getSeconds();
+        var hour = hour24 + minute / 60,
+                hour = hour > 12 ? hour - 12 : hour;
+//时针
+        cas.save();
+        cas.translate(250, 250);
+        cas.rotate(hour * Math.PI / 6);
+        cas.beginPath();
+        cas.moveTo(0, -10);
+        cas.lineTo(0, -110);
+        cas.lineWidth = 5;
+        cas.lineCap = "round";
+        cas.stroke();
+        cas.restore();
+//分针
+        cas.save();
+        cas.translate(250, 250);
+        cas.rotate(minute * Math.PI / 30);
+        cas.beginPath();
+        cas.moveTo(0, 15);
+        cas.lineTo(0, -130);
+        cas.lineWidth = 3;
+        cas.lineCap = "round";
+        cas.stroke();
+        cas.restore();
+//秒针
+        cas.save();
+        cas.translate(250, 250);
+        cas.rotate(second * Math.PI / 30);
+        cas.beginPath();
+        cas.moveTo(0, 20);
+        cas.lineTo(0, -150);
+        cas.lineWidth = 1;
+        cas.lineCap = "round";
+        cas.strokeStyle = "red";
+        cas.stroke();
+//秒针顶端
+        cas.beginPath();
+        cas.arc(0, -125, 5, 0, Math.PI * 2);
+        cas.closePath();
+        cas.lineWidth = "2";
+        cas.strokeStyle = "red";
+        cas.stroke();
+        cas.fillStyle = "white";
+        cas.fill();
+        cas.restore();
+//装饰
+        cas.beginPath();
+        cas.arc(250, 250, 5, 0, Math.PI * 2);
+        cas.closePath();
+        cas.lineWidth = "2";
+        cas.strokeStyle = "red";
+        cas.stroke();
+        cas.fillStyle = "white";
+        cas.fill();
+//品牌
+        cas.fillStyle = "black";
+        cas.font = "18px Arial";
+        cas.textAlign = "center";
+        cas.fillText('Daniel Wellington',250,130)
+    }
+</script>
+
+</body>
+</html>
